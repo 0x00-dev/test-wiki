@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Создание страницы{% endblock %}
+
+{% block body %}
+<div class="col-md-4 col-md-offset-4">
+    <form class="form" action="/page/add" method="post">
+        <label for="title">Введите заголовок</label>
+        <input class="form-control" name="title" placeholder="Заголовок" id="title"/>
+        <label for="address">Введите адрес</label>
+        <input class="form-control" name="address" placeholder="Адрес" id="address"/>
+        <label for="text">Введите текст</label>
+        <textarea class="form-control" name="text" placeholder="Текст" id="text"></textarea>
+        <button class="btn btn-xs btn-success" style="margin-top: 10px;">Сохранить</button>
+        <input type="hidden" name="parent_page" value="{{ parent_address }}"/>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block body %}
+    <h2>{{ page.title }}</h2>
+    {% if page.parentPage|length > 0 %}
+        <a class="btn-link" href="{{ page.parentPage }}">{{ page.parentPage }}</a>
+    {% endif %}
+    <div class="page-options">
+        <a class="btn-link" href="{{ page.address }}/edit">Редактировать</a>
+        <a class="btn-link" href="{{ page.address }}/delete" data-q="true">Удалить</a>
+        <a class="btn-link" href="{{ page.address }}/add">Добавить дочернюю страницу</a>
+    </div>
+    <div class="page-text">{{ page.text }}</div>
+    <ul class="list">
+        {% for child in childs %}
+            <a href="{{ child.address }}">{{ child.title }}</a>
+        {% endfor %}
+    </ul>
+{% endblock %}

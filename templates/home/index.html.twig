@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h4>Последние страницы</h4>
+    {% if pages|length > 0 %}
+        <ul class="list">
+            {% for page in pages %}
+                <li><a href="{{ page.address }}">{{ page.title }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert">Страницы не найдены</div>
+    {% endif %}
+    <a class="btn-link pull-left" href="/page/create">Добавить страницу</a>
+{% endblock %}
