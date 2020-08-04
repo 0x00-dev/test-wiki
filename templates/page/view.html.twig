@@ -10,7 +10,7 @@
         <a class="btn-link" href="{{ page.address }}/delete" data-q="true">Удалить</a>
         <a class="btn-link" href="{{ page.address }}/add">Добавить дочернюю страницу</a>
     </div>
-    <div class="page-text">{{ page.text }}</div>
+    <div class="page-text">{{ page.text|raw }}</div>
     <ul class="list">
         {% for child in childs %}
             <a href="{{ child.address }}">{{ child.title }}</a>

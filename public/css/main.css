@@ -69,3 +69,8 @@ html, body
     width: 100%;
     padding: 10px;
 }
+
+.damaged-link
+{
+    color: rgb(220, 20, 60);
+}

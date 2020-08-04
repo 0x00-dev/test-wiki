@@ -10,7 +10,7 @@
             <label for="text">Введите текст</label>
             <textarea class="form-control" name="text" placeholder="Текст" id="text">{{ page.text }}</textarea>
             <button class="btn btn-xs btn-success" style="margin-top: 10px;">Сохранить изменения</button>
-            <a class="btn-link pull-right" style="margin-top: 10px;" href="{{ page.address }}/add">Добавить дочернюю страницу</a>
+            <a class="btn-link pull-right" style="margin-top: 10px;" href="/{{ page.address }}/add">Добавить дочернюю страницу</a>
         </form>
     </div>
 {% endblock %}

@@ -34,6 +34,7 @@ class PageController extends AbstractController
             ->setText($request->get('text'))
             ->setTitle($request->get('title'))
             ->setParentPage($request->get('parent_page', null));
+        $page->markLinks($this->getDoctrine());
         $em = $this->getDoctrine()
             ->getManager();
         $em->persist($page);
@@ -57,10 +58,18 @@ class PageController extends AbstractController
     {
         $doctrine = $this->getDoctrine();
         $repository = $doctrine->getRepository(Page::class);
+        /** @var Page $page */
         $page = $repository->findOneBy(['address' => $address]);
         if (null === $page) {
-            return $this->redirectToRoute('error_404');
+            return $this->redirectToRoute('error_404', [], 404);
         }
+
+        $text = $page->getText();
+        $text = preg_replace("~<b>([a-zA-Zа-яА-Я0-9\s\w]+)</b>~", "**$1**", $text);
+        $text = preg_replace("~<i>([a-zA-Zа-яА-Я0-9\s\w]+)</i>~", "//$1//", $text);
+        $text = preg_replace("~<u>([a-zA-Zа-яА-Я0-9\s\w]+)</u>~", "__$1__", $text);
+
+        $page->setWikiText($text);
 
         return $this->render('/page/edit.html.twig', ['page' => $page]);
     }
@@ -75,7 +84,7 @@ class PageController extends AbstractController
             ->getRepository(Page::class)
             ->findOneBy(['address' => $address]);
         if (null === $page) {
-            return $this->redirectToRoute('error_404');
+            return $this->redirectToRoute('error_404', [], 404);
         }
         $childs = $this->getDoctrine()
             ->getRepository(Page::class)
@@ -96,7 +105,7 @@ class PageController extends AbstractController
             ->getRepository(Page::class)
             ->findOneBy(['address' => $address]);
         if (null === $page) {
-            return $this->redirectToRoute('error_404');
+            return $this->redirectToRoute('error_404', [], 404);
         }
         $em = $this->getDoctrine()
             ->getManager();
@@ -120,7 +129,7 @@ class PageController extends AbstractController
             ->getRepository(Page::class)
             ->findOneBy(['address' => $address]);
         if (null === $page) {
-            return $this->redirectToRoute('error_404');
+            return $this->redirectToRoute('error_404', [], 404);
         }
 
         return $this->render('page/create.html.twig', ['parent_address' => $address]);
@@ -138,7 +147,7 @@ class PageController extends AbstractController
             ->getRepository(Page::class)
             ->find($request->get('id'));
         if (null === $page) {
-            return $this->redirectToRoute('error_404');
+            return $this->redirectToRoute('error_404', [], 404);
         }
         $page->setText($request->get('text'))
             ->setTitle($request->get('title'));
